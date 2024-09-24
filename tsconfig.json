@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/src/*": ["src/*"]
+        },
+        // "strict": true,
+        // "lib": [
+        //     "ES5",
+        //     "ES2015",
+        //     "ES2016",
+        //     "ES2017",
+        //     "ES2018",
+        //     "ES2019",
+        //     "ES2020",
+        //     "DOM"
+        // ],
+        "jsx": "react-jsx", // jsx파일 react 임포트 코드 생략
+        // "esModuleInterop": true
+    }
+}
