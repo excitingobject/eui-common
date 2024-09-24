@@ -1,0 +1,20 @@
+{
+  "name": "eui-common",
+  "version": "1.0.0",
+  "description": "Exciting UI Common Library",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm i && webpack serve --hot --progress --config webpack.config.dev.js"
+  },
+  "keywords": [
+    "eui"
+  ],
+  "author": "eo",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
