@@ -1,9 +1,14 @@
+const path = require('path');
+const autoprefixer = require('autoprefixer')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     name: 'eui-common',
     resolve: {
-        extensions: ['.js', '.ts', '.tsx']
+        extensions: ['.js', '.ts', '.tsx'],
+        alias: {
+            '@/src': path.resolve(__dirname, 'src')
+        }
     },
     module: {
         rules: [            
@@ -23,7 +28,25 @@ module.exports = {
                     ],
                     compact: true // Babel 코드를 더 간결하게 변환하여 최종 번들 크기를 줄임
                 }
-            },
+            }, {
+                test: /\.(scss|css)$/,
+                use: [
+                    'style-loader', // inject CSS to page
+                    'css-loader', // translates CSS into CommonJS modules
+                    {
+                        // Loader for webpack to process CSS with PostCSS
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    autoprefixer
+                                ]
+                            }
+                        }
+                    },
+                    'sass-loader', // compiles Sass to CSS
+                ]
+            }
         ]
     },
     entry: {

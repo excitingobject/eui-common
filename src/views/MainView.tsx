@@ -1,6 +1,6 @@
 const MainView: React.FC = () => {
     
-    return <div>Main View!</div>
+    return <div className="eo">Main View!</div>
 }
 
 export default MainView
