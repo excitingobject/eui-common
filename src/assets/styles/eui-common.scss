@@ -1,14 +1,12 @@
 @use "sass:color";
 
+/************************************
+* base
+*************************************/
 @import 'base/nomalize';
 @import 'base/reset';
 @import 'base/functions';
-
-/************************************
-* variables
-*************************************/
-@import 'variables/defaults';
-@import 'variables/components';
+@import 'base/variables';
 
 /************************************
 * components
@@ -16,13 +14,21 @@
 @import 'components/button';
 
 /************************************
-* layout
+* style
 *************************************/
+// color
+
+// layout
 @for $scale from 0 through 100 {
     .vw#{$scale} {
         width: 1% * $scale;
     }
     .vh#{$scale} {
         height: 1% * $scale;
+    }
+}
+@for $scale from 0 through 1000 {
+    .r#{$scale} {
+        border-radius: 1px * $scale;
     }
 }
