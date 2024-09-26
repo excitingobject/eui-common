@@ -1,0 +1,72 @@
+@function is-white($color) {
+    $rgb: red($color), green($color), blue($color);
+    @return $rgb ==(255, 255, 255);
+}
+
+@function is-light($color) {
+    @return color.channel($color, "lightness", $space: hsl)>50;
+}
+
+@function light-color($color, $scale: 25%) {
+    @return color.adjust($color, $lightness: $scale);
+}
+
+@function dark-color($color, $scale: 25%) {
+    @return color.adjust($color, $lightness: $scale * -1);
+}
+
+@function similar-color($color, $scale: 25%) {
+    @return if(is-light($color), dark-color($color, $scale), light-color($color, $scale));
+}
+
+@mixin theme-color($t-color) {
+    $is-light: is-light($t-color);
+
+    $color: if($is-light, white, light-color($t-color, 70%));
+    $light-color: light-color($color);
+
+    color: $color;
+    background-color: $t-color;
+    border: 0.1rem $t-color solid;
+    
+    &:active {
+        background-color: similar-color($t-color, 20%);
+    }    
+
+    &:hover {
+        background-color: similar-color($t-color, 25%);
+        &:active {
+            background-color: similar-color($t-color, 20%);
+        }
+    }
+
+    &.active {
+        background-color: similar-color($t-color, 20%);
+        &:hover {
+            background-color: similar-color($t-color, 25%);
+        }
+    }
+
+    &.outline {
+        color: $t-color;
+        background-color: $light-color;
+
+        &:hover {
+            color: $color;
+            background-color: similar-color($t-color);
+            &:active {
+                color: $t-color;
+                background-color: dark-color($light-color, 20%);
+            }
+        }
+
+        &.active,
+        &:active {
+            color: $light-color;
+            background-color: similar-color($t-color, 20%);
+        }
+
+    }
+
+    transition: .2s;
+}

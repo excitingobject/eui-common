@@ -1,0 +1,10 @@
+.eo-btn {
+    position: relative;    
+    padding: $eo-btn-padding;
+    
+    @include theme-color($eo-btn-color);
+
+    &.round {
+        border-radius: $eo-btn-round-radius;
+    }
+}

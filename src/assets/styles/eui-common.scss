@@ -1,4 +1,28 @@
-.eo {
-    background-color: blue;
-    color: white;
+@use "sass:color";
+
+@import 'base/nomalize';
+@import 'base/reset';
+@import 'base/functions';
+
+/************************************
+* variables
+*************************************/
+@import 'variables/defaults';
+@import 'variables/components';
+
+/************************************
+* components
+*************************************/
+@import 'components/button';
+
+/************************************
+* layout
+*************************************/
+@for $scale from 0 through 100 {
+    .vw#{$scale} {
+        width: 1% * $scale;
+    }
+    .vh#{$scale} {
+        height: 1% * $scale;
+    }
 }
