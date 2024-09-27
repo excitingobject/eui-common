@@ -1,6 +1,7 @@
 .eo-btn {
     position: relative;    
-    padding: $eo-btn-padding;
+    padding: 0.375rem 0.75rem;
     
-    @include exciting-color($eo-btn-color);
+    @include set-exciting-color($eo-btn-color, true);
+    @include set-outline-color($eo-btn-color, true);
 }

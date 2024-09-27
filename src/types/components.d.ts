@@ -1,6 +1,10 @@
-declare namespace EO {
-    interface BtnProps extends ReactHtml.Button {
+declare namespace Eo {
+    interface Common<Props> { 
+        options?: Props 
+    }
+
+    interface BtnProps extends Common<BtnProps>, ReactHtml.Button {
         outline?: boolean
-        selected?: boolean
+        active?: boolean
     }
 }

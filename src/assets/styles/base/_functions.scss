@@ -1,6 +1,6 @@
 /*******************************
 * color
-********************************/ 
+********************************/
 @function is-white($color) {
     $rgb: red($color), green($color), blue($color);
     @return $rgb ==(255, 255, 255);
@@ -10,74 +10,38 @@
     @return color.channel($color, "lightness", $space: hsl)>50;
 }
 
-@function light-color($color, $scale: 30%) {
+@function get-light-color($color, $scale: 30%) {
     @return color.adjust($color, $lightness: $scale);
 }
 
-@function dark-color($color, $scale: 30%) {
+@function get-dark-color($color, $scale: 30%) {
     @return color.adjust($color, $lightness: $scale * -1);
 }
 
-@function similar-color($color, $scale: 30%) {
-    @return if(is-light($color), dark-color($color, $scale), light-color($color, $scale));
+@function get-similar-color($color, $scale: 30%) {
+    @return if(is-light($color), get-dark-color($color, $scale), get-light-color($color, $scale));
 }
 
-// exciting-color
-@mixin exciting-color($t-color) {
-    $color: if(is-light($t-color), white, light-color($t-color, 80%));
-
-    color: $color;
-    background-color: $t-color;
-    border: 0.1rem $t-color solid;
-
-    &.active {
+// mixin
+@mixin set-active-color($color) {
+    &:not(:disabled) {
         &:hover {
-            background-color: similar-color($t-color);
+            background-color: get-similar-color($color);
 
             &:active {
-                background-color: similar-color($t-color, 20%);
+                background-color: get-similar-color($color, 20%);
             }
         }
 
-        &.selected,
+        &.active,
         &:active {
-            background-color: similar-color($t-color, 20%);
+            background-color: get-similar-color($color, 20%);
 
             &:hover {
-                background-color: similar-color($t-color);
+                background-color: get-similar-color($color);
 
                 &:active {
-                    background-color: similar-color($t-color, 20%);
-                }
-            }
-        }
-    }
-
-    &.outline {
-        color: $t-color;
-        background-color: $color;
-
-        &.active {
-            &:hover {
-                color: $color;
-                background-color: similar-color($t-color);
-
-                &:active {
-                    background-color: similar-color($t-color, 20%);
-                }
-            }
-
-            &.selected,
-            &:active {
-                color: $color;
-                background-color: similar-color($t-color, 20%);
-
-                &:hover {
-                    background-color: similar-color($t-color);
-
-                    &:active {
-                        background-color: similar-color($t-color, 20%);
-                    }
+                    background-color: get-similar-color($color, 20%);
                 }
             }
         }
@@ -92,6 +56,27 @@
     transition: .2s;
 }
 
+@mixin set-outline-color($color, $is-active: false) {
+    &.outline {
+        color: $color;
+        background-color: white;
+
+        @if($is-active == true) {
+            @include set-active-color($color);
+        }
+    }
+}
+
+@mixin set-exciting-color($color, $is-active: false) {
+    color: if(is-light($color), white, get-light-color($color, 80%));
+    background-color: $color;
+    border: 1px $color solid;
+
+    @if($is-active == true) {
+        @include set-active-color($color);
+    }
+}
+
 /*******************************
 * layout
-********************************/ 
+********************************/

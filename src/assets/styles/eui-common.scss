@@ -19,7 +19,11 @@
 // color
 
 // layout
-@for $scale from 0 through 100 {
+@for $scale from 100 through 0 {
+    .v#{$scale} {
+        width: 1% * $scale;
+        height: 1% * $scale;
+    }
     .vw#{$scale} {
         width: 1% * $scale;
     }
@@ -27,8 +31,36 @@
         height: 1% * $scale;
     }
 }
-@for $scale from 0 through 1000 {
+@for $scale from 1000 through 0 {
     .r#{$scale} {
         border-radius: 1px * $scale;
+    }
+    .r-t#{$scale} {
+        border-top-left-radius: 1px * $scale;
+        border-top-right-radius: 1px * $scale;
+    }
+    .r-b#{$scale} {
+        border-bottom-left-radius: 1px * $scale;
+        border-bottom-right-radius: 1px * $scale;
+    }
+    .r-l#{$scale} {
+        border-top-left-radius: 1px * $scale;
+        border-bottom-left-radius: 1px * $scale;
+    }
+    .r-r#{$scale} {
+        border-top-right-radius: 1px * $scale;
+        border-bottom-right-radius: 1px * $scale;
+    }
+    .r-tl#{$scale} {
+        border-top-left-radius: 1px * $scale;
+    }
+    .r-tr#{$scale} {
+        border-top-right-radius: 1px * $scale;
+    }
+    .r-bl#{$scale} {
+        border-bottom-left-radius: 1px * $scale;
+    }
+    .r-br#{$scale} {
+        border-bottom-right-radius: 1px * $scale;
     }
 }
