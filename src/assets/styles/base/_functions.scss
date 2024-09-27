@@ -1,6 +1,7 @@
 /*******************************
-* color
+* function
 ********************************/
+// color
 @function is-white($color) {
     $rgb: red($color), green($color), blue($color);
     @return $rgb ==(255, 255, 255);
@@ -22,8 +23,10 @@
     @return if(is-light($color), get-dark-color($color, $scale), get-light-color($color, $scale));
 }
 
-// mixin
-@mixin set-active-color($color) {
+/*******************************
+* mixin
+********************************/
+@mixin set-active($color) {
     &:not(:disabled) {
         &:hover {
             background-color: get-similar-color($color);
@@ -33,7 +36,7 @@
             }
         }
 
-        &.active,
+        &.active, &.selected,
         &:active {
             background-color: get-similar-color($color, 20%);
 
@@ -46,37 +49,25 @@
             }
         }
     }
-
-    &.disabled {
-        color: white;
-        background-color: lightgray;
-        border-color: lightgray;
-    }
-
     transition: .2s;
 }
 
-@mixin set-outline-color($color, $is-active: false) {
+@mixin set-outline($color, $is-active: false) {
     &.outline {
         color: $color;
         background-color: white;
 
         @if($is-active == true) {
-            @include set-active-color($color);
+            @include set-active($color);
         }
     }
 }
 
-@mixin set-exciting-color($color, $is-active: false) {
+@mixin set-eo-common($color) {
+    position: relative;
+    padding: 0.375rem 0.75rem;
+
     color: if(is-light($color), white, get-light-color($color, 80%));
     background-color: $color;
     border: 1px $color solid;
-
-    @if($is-active == true) {
-        @include set-active-color($color);
-    }
 }
-
-/*******************************
-* layout
-********************************/

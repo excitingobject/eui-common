@@ -1,0 +1,28 @@
+.eo {
+    &-btn {
+        @include set-eo-common($eo-btn-color);
+        @include set-active($eo-btn-color);
+        @include set-outline($eo-btn-color, true);
+
+    }
+
+    &-input {
+        @include set-eo-common($eo-input-color);
+        @include set-outline($eo-input-color);
+
+        width: 100%;
+    }
+
+    &-select {
+        @include set-eo-common($eo-input-color);
+        @include set-outline($eo-input-color);
+    }
+}
+
+button, input, select {
+    &:disabled {
+        color: gray !important;
+        background-color: lightgray !important;
+        border-color: lightgray !important;
+    }
+}

@@ -1,21 +1,41 @@
-import EoBtn from "../components/EoBtn"
+import EoBtn from "../components/common/EoBtn"
+import EoInput from "../components/common/EoInput"
+import EoSelect from "../components/common/EoSelect"
 
 const MainView: React.FC = () => {
+    const codes = [
+        {
+            label: 'Exciting Object',
+            order: 3
+        },
+        {
+            label: 'Test',
+            order: 1
+        },
+        {
+            label: 'Disabled',
+            disabled: true,
+            order: 2
+        },
+        {
+            label: 'Selected',
+            // selected: true
+        },
+    ]
     return <div className="v100" style={{position: "absolute"}}>
         <EoBtn>Button</EoBtn>
         <EoBtn outline>Outline</EoBtn>
         <EoBtn active>Active</EoBtn>
         <EoBtn disabled>Disabled</EoBtn>
+        <br/>
 
-        <EoBtn className="r5">Button</EoBtn>
-        <EoBtn className="r10" outline>Outline</EoBtn>
-        <EoBtn className="r15" active>Active</EoBtn>
-        <EoBtn className="r20" disabled>Disabled</EoBtn>
-        
-        <EoBtn className="vw100">width:100%;</EoBtn>
-        <EoBtn className="vw20 vh8">width:20%; height:8%;</EoBtn>
-        <EoBtn className="vw30 vh5" outline>Outline(width:30%; height:5%;)</EoBtn>
-        <EoBtn className="r300 vw100 vh30" active>Active(width:100%; height:30%;)</EoBtn>
+        <EoInput type='text' placeholder="Test placeholder..."/>
+        <EoInput type='text' disabled value="Disabled..."/>
+        <br/>
+
+        <EoSelect options={codes} placeholder="Select One..."/>
+        <EoSelect options={codes} placeholder="Select Multiple..." multiple/>
+        <EoSelect options={codes} disabled className="vw100"/>
     </div>
 }
 
