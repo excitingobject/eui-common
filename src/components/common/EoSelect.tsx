@@ -1,3 +1,4 @@
+import rand from "@/src/scripts/utils/rand";
 import { clsx } from "clsx";
 import { FC } from "react";
 
@@ -7,58 +8,65 @@ const EoSelect: FC<Eo.SelectProps> = (props) => {
         ...props.properties
     }
 
-    const options = [...properties.options];
-    const selectedOne = options.find(o => o.selected == true)
+    const options = properties.options? [...properties.options]: [];
     const isOption = options.length > 0;
     if (isOption) {
         options.sort((a, b) => {
-            const o1 = a.order || 0;
-            const o2 = b.order || 0;
+            const o1 = a.order || Number.MAX_SAFE_INTEGER;
+            const o2 = b.order || Number.MAX_SAFE_INTEGER;
             return o1 == o2 ? 0 : o1 > o2 ? 1 : -1;
         })
-    }
-
-    const onSelected = (selected: Eo.Data.CodeType) => {
-        if (properties._on_selected) {
-            properties._on_selected(selected);
-        }
-    }
+    }    
+    const selectedIdx = options.findIndex(o => o.selected == true)
     
     const attr = {
         ...properties,
         className: clsx('eo-select outline r5', properties.className),
+        defaultValue: (selectedIdx > -1 && !properties.multiple) ? selectedIdx : undefined,
+
+        onChange: (e: any) => {            
+            if(properties.onChange) {
+                properties.onChange(e);
+            }
+            const selectedCodes: Eo.Data.CodeType[] = []
+            if (properties._on_selected) {
+                console.log(e)
+                // properties._on_selected(op : undefined);
+            }
+            if (properties._on_multi_selected) {
+                for(let i=0; i<e.target.length; i++) {
+                    if(e.target[i] && e.target[i].selected == true) {
+                        console.log(i, e.target[i].selected);
+                        selectedCodes.push(options[i])
+                    }
+                }
+                properties._on_multi_selected(selectedCodes);
+            }
+        },
 
         options: undefined,
         placeholder: undefined,
-        _on_selected: undefined
+        _on_selected: undefined,
+        _on_multi_selected: undefined
     } as ReactHtml.Select
 
+    const optKey = rand.code('opt','-')
     return <select {...attr}>
         {
-            selectedOne == undefined && props.placeholder && !props.multiple &&
+            selectedIdx < 0 && props.placeholder && !props.multiple &&
             <option label={props.placeholder} style={{display: 'none'}} />
         }
         {
-            isOption ? options.map((o, i) => <EoOption key={'o_todo-key_' + i} {...o} _on_selected={onSelected} />) : properties.children
+            isOption ? options.map((o, i) => {
+                const optionAttr = {
+                    // default: code
+                    disabled: o.disabled,        
+                    label: o.label
+                } as ReactHtml.Option                
+                return <option key={optKey + i} {...optionAttr} />
+            }) : properties.children
         }
     </select>
 }
 
 export default EoSelect
-
-export const EoOption: FC<Eo.OptionProps> = (props) => {
-    const attr = {
-        ...props,
-
-        order: undefined,
-        data: undefined,
-        _on_selected: undefined
-    } as ReactHtml.Option
-
-    const onSelected = () => {
-        if (props._on_selected) {
-            props._on_selected(props.data);
-        }
-    }
-    return <option {...attr} onClick={onSelected}>{props.children}</option>
-}

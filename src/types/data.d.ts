@@ -3,8 +3,7 @@ declare namespace Eo.Data {
         selected?: boolean
         disabled?: boolean
         label?: string
-        order?: number
+        order?: number        
         data?: Data
-    }
-    type CodeListType<Data = any> = CodeType<Data>[]
+    }    
 }

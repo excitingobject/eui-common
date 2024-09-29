@@ -12,14 +12,15 @@ declare namespace Eo {
 
     }
 
-    interface OptionProps<Data = any> extends Data.CodeType<Data>, ReactHtml.Option {
-        _on_selected?: (selected: Data.CodeType<Data>) => void
+    interface OptionProps<D = any> extends Common<OptionProps<D>>, ReactHtml.Option {
+        code?: Data.CodeType<D>
     }
 
-    interface SelectProps<Data = any> extends Common<SelectProps<Data>>, ReactHtml.Select {
-        options?: Data.CodeListType<Data>
+    interface SelectProps<D = any> extends Common<SelectProps<D>>, ReactHtml.Select {
+        options?: Data.CodeType<D>[]
         placeholder?: string
 
-        _on_selected?: (selected: Data.CodeType<Data>) => void
+        _on_selected?: (code: Data.CodeType<D>) => void
+        _on_multi_selected?: (codes: Data.CodeType<D>[]) => void
     }
 }

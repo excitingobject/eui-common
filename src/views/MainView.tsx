@@ -3,14 +3,14 @@ import EoInput from "../components/common/EoInput"
 import EoSelect from "../components/common/EoSelect"
 
 const MainView: React.FC = () => {
-    const codes = [
+    const codes: Eo.Data.CodeType[] = [
         {
             label: 'Exciting Object',
             order: 3
         },
         {
             label: 'Test',
-            order: 1
+            order: 1,
         },
         {
             label: 'Disabled',
@@ -19,10 +19,12 @@ const MainView: React.FC = () => {
         },
         {
             label: 'Selected',
-            // selected: true
         },
     ]
-    return <div className="v100" style={{position: "absolute"}}>
+    const onSelected = (data: any) => {
+        console.log(data);
+    }
+    return <div className="fullscreen">
         <EoBtn>Button</EoBtn>
         <EoBtn outline>Outline</EoBtn>
         <EoBtn active>Active</EoBtn>
@@ -33,9 +35,15 @@ const MainView: React.FC = () => {
         <EoInput type='text' disabled value="Disabled..."/>
         <br/>
 
-        <EoSelect options={codes} placeholder="Select One..."/>
-        <EoSelect options={codes} placeholder="Select Multiple..." multiple/>
-        <EoSelect options={codes} disabled className="vw100"/>
+        <EoSelect placeholder="Select One..." _on_selected={onSelected}>
+            <option>Test1</option>
+            <option>Test2</option>
+            <option>Test3</option>
+            <option>Test4</option>
+        </EoSelect>
+        <EoSelect options={codes} placeholder="Select One..." _on_selected={onSelected}/>
+        <EoSelect options={codes} placeholder="Select Multiple..." multiple _on_multi_selected={onSelected}/>
+        <EoSelect options={codes} placeholder="Placeholder, Disabled 테스트..."disabled className="vw100"/>
     </div>
 }
 

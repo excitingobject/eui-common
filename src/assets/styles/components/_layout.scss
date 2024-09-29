@@ -1,0 +1,21 @@
+.fullscreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+@for $val from 100 through 0 {
+    .v#{$val} {
+        width: 1% * $val;
+        height: 1% * $val;
+    }
+    .vw#{$val} {
+        width: 1% * $val;
+    }
+    .vh#{$val} {
+        height: 1% * $val;
+    }
+    .r#{$val} {
+        border-radius: 1px * $val;
+    }
+}
