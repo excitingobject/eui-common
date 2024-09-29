@@ -8,19 +8,13 @@ declare namespace Eo {
         active?: boolean
     }
 
-    interface InputProps extends Common<InputProps>, ReactHtml.Input {
+    interface CheckboxProps<D = any> extends Common<CheckboxProps>, Data.CodeData<D>, ReactHtml.Input { }
 
-    }
+    interface InputProps extends Common<InputProps>, ReactHtml.Input { }
 
-    interface OptionProps<D = any> extends Common<OptionProps<D>>, ReactHtml.Option {
-        code?: Data.CodeType<D>
-    }
+    interface OptionProps<D = any> extends Common<OptionProps<D>>, Data.CodeData<D>, ReactHtml.Option { }
 
-    interface SelectProps<D = any> extends Common<SelectProps<D>>, ReactHtml.Select {
-        options?: Data.CodeType<D>[]
+    interface SelectProps<D = any> extends Common<SelectProps<D>>, Data.CodeListData<D>, ReactHtml.Select {
         placeholder?: string
-
-        _on_selected?: (code: Data.CodeType<D>) => void
-        _on_multi_selected?: (codes: Data.CodeType<D>[]) => void
     }
 }

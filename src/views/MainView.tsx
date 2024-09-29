@@ -1,6 +1,7 @@
 import EoBtn from "../components/common/EoBtn"
 import EoInput from "../components/common/EoInput"
 import EoSelect from "../components/common/EoSelect"
+import EoCheckbox from "../components/selector/EoCheckbox"
 
 const MainView: React.FC = () => {
     const codes: Eo.Data.CodeType[] = [
@@ -15,10 +16,12 @@ const MainView: React.FC = () => {
         {
             label: 'Disabled',
             disabled: true,
-            order: 2
+            order: 2,
+            selected: true
         },
         {
             label: 'Selected',
+            selected: true
         },
     ]
     const onSelected = (data: any) => {
@@ -41,9 +44,13 @@ const MainView: React.FC = () => {
             <option>Test3</option>
             <option>Test4</option>
         </EoSelect>
-        <EoSelect options={codes} placeholder="Select One..." _on_selected={onSelected}/>
-        <EoSelect options={codes} placeholder="Select Multiple..." multiple _on_multi_selected={onSelected}/>
-        <EoSelect options={codes} placeholder="Placeholder, Disabled 테스트..."disabled className="vw100"/>
+        <EoSelect codes={codes} placeholder="Select One..." _on_selected={onSelected}/>
+        <EoSelect codes={codes} placeholder="Select Multiple..." multiple _on_multi_selected={onSelected}/>
+        <EoSelect codes={codes} placeholder="Placeholder, Disabled 테스트..."disabled className="vw100"/>
+        <br/>
+
+        <EoCheckbox />
+        <br/>
     </div>
 }
 

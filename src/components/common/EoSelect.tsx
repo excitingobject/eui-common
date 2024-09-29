@@ -8,43 +8,51 @@ const EoSelect: FC<Eo.SelectProps> = (props) => {
         ...props.properties
     }
 
-    const options = properties.options? [...properties.options]: [];
-    const isOption = options.length > 0;
-    if (isOption) {
-        options.sort((a, b) => {
+    const isCodes = Array.isArray(properties.codes) ;
+    const codeList = isCodes? [...properties.codes]: [];
+    if (isCodes) {
+        codeList.sort((a, b) => {
             const o1 = a.order || Number.MAX_SAFE_INTEGER;
             const o2 = b.order || Number.MAX_SAFE_INTEGER;
             return o1 == o2 ? 0 : o1 > o2 ? 1 : -1;
         })
     }    
-    const selectedIdx = options.findIndex(o => o.selected == true)
     
+    const _selectedIdxArr:number[] = []
+    codeList.map((c, i) => {
+        if(c.selected) {
+            _selectedIdxArr.push(i)
+        }
+    })
+
     const attr = {
         ...properties,
         className: clsx('eo-select outline r5', properties.className),
-        defaultValue: (selectedIdx > -1 && !properties.multiple) ? selectedIdx : undefined,
-
+        value: isCodes ? _selectedIdxArr : properties.value,
         onChange: (e: any) => {            
             if(properties.onChange) {
                 properties.onChange(e);
             }
             const selectedCodes: Eo.Data.CodeType[] = []
             if (properties._on_selected) {
-                console.log(e)
-                // properties._on_selected(op : undefined);
+                if(isCodes) {
+                    properties._on_selected(codeList[e.target.value])
+                } else {
+                    properties._on_selected(e.target.value)
+                }
             }
             if (properties._on_multi_selected) {
                 for(let i=0; i<e.target.length; i++) {
                     if(e.target[i] && e.target[i].selected == true) {
                         console.log(i, e.target[i].selected);
-                        selectedCodes.push(options[i])
+                        selectedCodes.push(codeList[i])
                     }
                 }
                 properties._on_multi_selected(selectedCodes);
             }
         },
 
-        options: undefined,
+        codes: undefined,
         placeholder: undefined,
         _on_selected: undefined,
         _on_multi_selected: undefined
@@ -53,17 +61,16 @@ const EoSelect: FC<Eo.SelectProps> = (props) => {
     const optKey = rand.code('opt','-')
     return <select {...attr}>
         {
-            selectedIdx < 0 && props.placeholder && !props.multiple &&
+            _selectedIdxArr.length == 0 && props.placeholder && !properties.multiple &&
             <option label={props.placeholder} style={{display: 'none'}} />
         }
         {
-            isOption ? options.map((o, i) => {
+            isCodes ? codeList.map((o, i) => {
                 const optionAttr = {
-                    // default: code
                     disabled: o.disabled,        
                     label: o.label
                 } as ReactHtml.Option                
-                return <option key={optKey + i} {...optionAttr} />
+                return <option key={optKey + i} {...optionAttr} value={i} />
             }) : properties.children
         }
     </select>
